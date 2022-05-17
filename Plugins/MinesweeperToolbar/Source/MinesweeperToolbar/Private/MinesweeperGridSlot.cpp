@@ -12,6 +12,9 @@
 #include "Widgets/Text/STextBlock.h"
 #include "Widgets/Input/SButton.h"
 
+//Editor includes
+#include "UtilGridButtonStyle.h"
+
 #define LOCTEXT_NAMESPACE "FMinesweeperToolbarModule"
 
 // ------------------------------------------------------------------------
@@ -25,6 +28,7 @@ void SMinesweeperGridSlot::SMinesweeperGridSlot::Construct(const FArguments& InA
     ChildSlot
     [
         SNew(SButton)
+        .ButtonStyle(FUtilGridButtonStyle::Get(), "MinesweeperGridButton.Button")
         .OnClicked(this, &SMinesweeperGridSlot::OnSlotClicked)
         .IsEnabled_Lambda([this]
         {

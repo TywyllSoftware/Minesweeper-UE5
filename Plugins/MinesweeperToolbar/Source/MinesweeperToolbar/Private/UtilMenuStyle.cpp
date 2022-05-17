@@ -11,7 +11,7 @@
 //Engine includes
 #include "Slate/SlateGameResources.h"
 
-TSharedPtr<FSlateStyleSet> FUtilMenuStyle::StyleInstance = NULL;
+TSharedPtr<FSlateStyleSet> FUtilMenuStyle::StyleInstance = nullptr;
 
 void FUtilMenuStyle::Initialize()
 {
@@ -41,12 +41,14 @@ FName FUtilMenuStyle::GetStyleSetName()
 #define TTF_FONT( RelativePath, ... ) FSlateFontInfo( Style->RootToContentDir( RelativePath, TEXT(".ttf") ), __VA_ARGS__ )
 #define OTF_FONT( RelativePath, ... ) FSlateFontInfo( Style->RootToContentDir( RelativePath, TEXT(".otf") ), __VA_ARGS__ )
 
-const FVector2D Icon16x16(16.0f, 16.0f);
-const FVector2D Icon20x20(20.0f, 20.0f);
-const FVector2D Icon40x40(40.0f, 40.0f);
+
 
 TSharedRef< FSlateStyleSet > FUtilMenuStyle::Create()
 {
+    const FVector2D Icon16x16(16.0f, 16.0f);
+    const FVector2D Icon20x20(20.0f, 20.0f);
+    const FVector2D Icon40x40(40.0f, 40.0f);
+    
     TSharedRef< FSlateStyleSet > Style = MakeShareable(new FSlateStyleSet("MinesweeperToolbarMenuStyle"));
     Style->SetContentRoot(FPaths::ProjectPluginsDir() / TEXT("MinesweeperToolbar/Resources"));
 

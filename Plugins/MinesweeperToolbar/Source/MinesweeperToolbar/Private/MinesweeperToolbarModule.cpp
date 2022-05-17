@@ -6,6 +6,7 @@
 #include "UtilMenuStyle.h"
 #include "UtilMenuCommands.h"
 #include "MinesweeperWindow.h"
+#include "UtilGridButtonStyle.h"
 
 //Engine Includes
 #include "LevelEditor.h"
@@ -16,6 +17,8 @@ void FMinesweeperToolbarModule::StartupModule()
 {
     FUtilMenuStyle::Initialize();
     FUtilMenuCommands::Register();
+    
+    FUtilGridButtonStyle::Initialize();
     
     m_UtilMenuCommandList = MakeShareable(new FUICommandList);
     
@@ -38,6 +41,7 @@ void FMinesweeperToolbarModule::ShutdownModule()
     
     FUtilMenuCommands::Unregister();
     FUtilMenuStyle::Shutdown();
+    FUtilGridButtonStyle::Shutdown();
 }
 
 void FMinesweeperToolbarModule::AddToolbarExtension(FToolBarBuilder& builder)
