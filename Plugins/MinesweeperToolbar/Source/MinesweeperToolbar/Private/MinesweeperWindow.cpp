@@ -299,86 +299,6 @@ FLinearColor SMinesweeperWindow::GetNumberColor(const int32 index) const
     }
 }
 
-// ------------------------------------------------------------------------
-// Protectred class functions (Callbacks)
-// ------------------------------------------------------------------------
-
-void SMinesweeperWindow::OnSetWidth(int32 InNewValue, ETextCommit::Type InCommitType)
-{
-    if(InCommitType == ETextCommit::OnCleared)
-    {
-        return;
-    }
-
-    m_SelectedWidth = InNewValue;
-}
-
-void SMinesweeperWindow::OnSetHeight(int32 InNewValue, ETextCommit::Type InCommitType)
-{
-    if(InCommitType == ETextCommit::OnCleared)
-    {
-        return;
-    }
-
-    m_SelectedHeight = InNewValue;
-}
-
-void SMinesweeperWindow::OnSetNumberOfMines(int32 InNewValue, ETextCommit::Type InCommitType)
-{
-    if(InCommitType == ETextCommit::OnCleared)
-    {
-        return;
-    }
-
-    m_SelectedNumberOfMines = InNewValue;
-}
-
-FReply SMinesweeperWindow::OnGenerateNewGridClicked()
-{
-    if (m_SelectedNumberOfMines > m_SelectedWidth * m_SelectedHeight)
-    {
-        //FSlateNotificationManager::Get().AddNotification(FNotificationInfo(GCanNotHaveMoreMinesText));
-        FMessageDialog::Open(EAppMsgType::Ok, GCanNotHaveMoreMinesText);
-    }
-    else
-    {
-        CreateNewGrid();
-    }
-    
-    return FReply::Handled();
-}
-
-void SMinesweeperWindow::OnGridPanelClicked(int32 Column, int32 Row)
-{
-    if(auto Slots = m_UniformGridPanel->GetChildren())
-    {
-        const auto IsValidIndex = [this, &Slots](const int32 Index) -> bool
-        {
-            return m_SelectedWidth * m_SelectedHeight > Index && Index >= 0;
-        };
-        
-        const auto GetSlotRef = [&Slots](const int32 Index) -> TSharedRef<SMinesweeperGridSlot>
-        {
-            return StaticCastSharedRef<SMinesweeperGridSlot>(Slots->GetChildAt(Index));
-        };
-        
-        const int32 Index = m_SelectedHeight * Column + Row;
-        if(IsValidIndex(Index) && GetSlotRef(Index)->GetSlotType() == EMinesweeperGridSlotType::Bomb)
-        {
-            FMessageDialog::Open(EAppMsgType::Ok, GLostGameText);
-            MakeAllGridVisible();
-            return;
-        }
-        
-        ExpandRecursively(Column, Row);
-        if(m_NumberOfCellsLeft == m_SelectedNumberOfMines)
-        {
-            FMessageDialog::Open(EAppMsgType::Ok, GWonGameText);
-            MakeAllGridVisible();
-        }
-    }
-}
-
 void SMinesweeperWindow::MarkBombs()
 {
     int32 MineCount = m_SelectedNumberOfMines;
@@ -541,6 +461,82 @@ void SMinesweeperWindow::MakeAllGridVisible()
                     GetSlotRef(Index)->SetSlotTextBasedOnCurrentType();
                 }
             }
+        }
+    }
+}
+
+
+// ------------------------------------------------------------------------
+// Protectred class functions (Callbacks)
+// ------------------------------------------------------------------------
+
+void SMinesweeperWindow::OnSetWidth(int32 InNewValue, ETextCommit::Type InCommitType)
+{
+    if(InCommitType == ETextCommit::OnCleared)
+    {
+        return;
+    }
+
+    m_SelectedWidth = InNewValue;
+}
+
+void SMinesweeperWindow::OnSetHeight(int32 InNewValue, ETextCommit::Type InCommitType)
+{
+    if(InCommitType == ETextCommit::OnCleared)
+    {
+        return;
+    }
+
+    m_SelectedHeight = InNewValue;
+}
+
+void SMinesweeperWindow::OnSetNumberOfMines(int32 InNewValue, ETextCommit::Type InCommitType)
+{
+    if(InCommitType == ETextCommit::OnCleared)
+    {
+        return;
+    }
+
+    m_SelectedNumberOfMines = InNewValue;
+}
+
+FReply SMinesweeperWindow::OnGenerateNewGridClicked()
+{
+    if (m_SelectedNumberOfMines > m_SelectedWidth * m_SelectedHeight)
+    {
+        //FSlateNotificationManager::Get().AddNotification(FNotificationInfo(GCanNotHaveMoreMinesText));
+        FMessageDialog::Open(EAppMsgType::Ok, GCanNotHaveMoreMinesText);
+    }
+    else
+    {
+        CreateNewGrid();
+    }
+    
+    return FReply::Handled();
+}
+
+void SMinesweeperWindow::OnGridPanelClicked(int32 Column, int32 Row)
+{
+    if(auto Slots = m_UniformGridPanel->GetChildren())
+    {
+        const auto GetSlotRef = [&Slots](const int32 Index) -> TSharedRef<SMinesweeperGridSlot>
+        {
+            return StaticCastSharedRef<SMinesweeperGridSlot>(Slots->GetChildAt(Index));
+        };
+        
+        const int32 Index = m_SelectedHeight * Column + Row;
+        if(IsValidGridPanelIndex(Index) && GetSlotRef(Index)->GetSlotType() == EMinesweeperGridSlotType::Bomb)
+        {
+            FMessageDialog::Open(EAppMsgType::Ok, GLostGameText);
+            MakeAllGridVisible();
+            return;
+        }
+        
+        ExpandRecursively(Column, Row);
+        if(m_NumberOfCellsLeft == m_SelectedNumberOfMines)
+        {
+            FMessageDialog::Open(EAppMsgType::Ok, GWonGameText);
+            MakeAllGridVisible();
         }
     }
 }

@@ -11,6 +11,7 @@
 #include "CoreMinimal.h"
 #include "Widgets/DeclarativeSyntaxSupport.h"
 #include "Widgets/SCompoundWidget.h"
+#include "Widgets/Layout/SUniformGridPanel.h"
 #include "Engine/Texture2D.h"
 
 class SMinesweeperWindow: public SCompoundWidget
@@ -68,6 +69,40 @@ protected:
      */
     FLinearColor GetNumberColor(const int32 index) const;
     
+    /*
+        @brief Callback when clicked on grid cell
+     
+        @param Column
+        @param Row
+     */
+    void OnGridPanelClicked(int32 Column, int32 Row);
+    
+    
+    void MarkBombs();
+    
+    /*
+        @param Column
+        @param Row
+     */
+    void ExpandRecursively(const int32 Column, const int32 Row);
+    
+    /*
+        @param Column
+        @param Row
+     
+        @return
+     */
+    int32 CountAdjBombs(const int32 Column, const int32 Row);
+    
+    /*
+        @param Column
+        @param Rrow
+     */
+    void SetGridSlotValue(const int32 Column, const int32 Row, const int32 SlotValue);
+    
+    void MakeAllGridVisible();
+    
+    
 protected:
     
     // ------------------------------------------------------------------------
@@ -104,39 +139,7 @@ protected:
         @return
      */    
     FReply OnGenerateNewGridClicked();
-    
-    /*
-        @brief Callback when clicked on grid cell
-     
-        @param Column
-        @param Row
-     */
-    void OnGridPanelClicked(int32 Column, int32 Row);
-    
-    
-    void MarkBombs();
-    
-    /*
-        @param Column
-        @param Row
-     */
-    void ExpandRecursively(const int32 Column, const int32 Row);
-    
-    /*
-        @param Column
-        @param Row
-     
-        @return
-     */
-    int32 CountAdjBombs(const int32 Column, const int32 Row);
-    
-    /*
-        @param Column
-        @param Rrow
-     */
-    void SetGridSlotValue(const int32 Column, const int32 Row, const int32 SlotValue);
-    
-    void MakeAllGridVisible();
+
     
 private:
 
