@@ -95,6 +95,8 @@ protected:
     int32 CountAdjBombs(const int32 Column, const int32 Row);
     
     /*
+        @brief Sets grid slot value as long as it is not a bomb
+     
         @param Column
         @param Rrow
      */

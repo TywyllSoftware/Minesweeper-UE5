@@ -418,7 +418,7 @@ void SMinesweeperWindow::SetGridSlotValue(const int32 Column, const int32 Row, c
         };
         
         const int Index = m_SelectedHeight * Column + Row;
-        if(IsValidGridPanelIndex(Index))
+        if(IsValidGridPanelIndex(Index) && GetSlotRef(Index)->GetSlotType() != EMinesweeperGridSlotType::Bomb)
         {
             GetSlotRef(Index)->SetSlotValue(SlotValue);
         }
