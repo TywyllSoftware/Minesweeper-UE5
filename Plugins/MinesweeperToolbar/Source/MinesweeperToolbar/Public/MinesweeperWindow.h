@@ -102,6 +102,12 @@ protected:
     
     void MakeAllGridVisible();
     
+    /*
+        @brief Checks if given index within the bounds of created uniform grid
+     
+        @param Index
+     */
+    bool IsValidGridPanelIndex(int32 Index) const;
     
 protected:
     

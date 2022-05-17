@@ -342,11 +342,6 @@ void SMinesweeperWindow::ExpandRecursively(const int32 Column, const int32 Row)
     {
         if(auto Slots = m_UniformGridPanel->GetChildren())
         {
-            const auto IsValidIndex = [this](const int32 Index) -> bool
-            {
-                return m_SelectedWidth * m_SelectedHeight > Index && Index >= 0;
-            };
-            
             auto GetSlotRef = [&Slots](const int32 Index) -> TSharedRef<SMinesweeperGridSlot>
             {
                 return StaticCastSharedRef<SMinesweeperGridSlot>(Slots->GetChildAt(Index));
@@ -354,7 +349,7 @@ void SMinesweeperWindow::ExpandRecursively(const int32 Column, const int32 Row)
             
             const int Index = m_SelectedHeight * Column + Row;
             
-            if(IsValidIndex(Index) == false ||  GetSlotRef(Index)->GetSlotType() == EMinesweeperGridSlotType::Bomb
+            if(IsValidGridPanelIndex(Index) == false ||  GetSlotRef(Index)->GetSlotType() == EMinesweeperGridSlotType::Bomb
                || GetSlotRef(Index)->IsExpanded() == true)
             {
                 return;
@@ -380,36 +375,31 @@ int32 SMinesweeperWindow::CountAdjBombs(const int32 Column, const int32 Row)
     int32 BombCount = 0;
     if(auto Slots = m_UniformGridPanel->GetChildren())
     {
-        const auto IsValidIndex = [this](const int32 Index) -> bool
-        {
-            return m_SelectedWidth * m_SelectedHeight > Index && Index >= 0;
-        };
-        
         auto GetSlotRef = [&Slots](const int32 Index) -> TSharedRef<SMinesweeperGridSlot>
         {
             return StaticCastSharedRef<SMinesweeperGridSlot>(Slots->GetChildAt(Index));
         };
         
         int32 Index = m_SelectedHeight * (Column - 1) + Row;
-        if(IsValidIndex(Index) == true && GetSlotRef(Index)->GetSlotType() == EMinesweeperGridSlotType::Bomb)
+        if(IsValidGridPanelIndex(Index) == true && GetSlotRef(Index)->GetSlotType() == EMinesweeperGridSlotType::Bomb)
         {
             BombCount++;
         }
         
         Index = m_SelectedHeight * (Column + 1) + Row;
-        if(IsValidIndex(Index) == true && GetSlotRef(Index)->GetSlotType() == EMinesweeperGridSlotType::Bomb)
+        if(IsValidGridPanelIndex(Index) == true && GetSlotRef(Index)->GetSlotType() == EMinesweeperGridSlotType::Bomb)
         {
             BombCount++;
         }
         
         Index = m_SelectedHeight * Column + (Row - 1);
-        if(IsValidIndex(Index) == true && GetSlotRef(Index)->GetSlotType() == EMinesweeperGridSlotType::Bomb)
+        if(IsValidGridPanelIndex(Index) == true && GetSlotRef(Index)->GetSlotType() == EMinesweeperGridSlotType::Bomb)
         {
             BombCount++;
         }
         
         Index = m_SelectedHeight * Column + (Row + 1);
-        if(IsValidIndex(Index) == true && GetSlotRef(Index)->GetSlotType() == EMinesweeperGridSlotType::Bomb)
+        if(IsValidGridPanelIndex(Index) == true && GetSlotRef(Index)->GetSlotType() == EMinesweeperGridSlotType::Bomb)
         {
             BombCount++;
         }
@@ -422,18 +412,13 @@ void SMinesweeperWindow::SetGridSlotValue(const int32 Column, const int32 Row, c
 {
     if(auto Slots = m_UniformGridPanel->GetChildren())
     {
-        const auto IsValidIndex = [this](const int32 Index) -> bool
-        {
-            return m_SelectedWidth * m_SelectedHeight > Index && Index > 0;
-        };
-        
         auto GetSlotRef = [&Slots](const int32 Index) -> TSharedRef<SMinesweeperGridSlot>
         {
             return StaticCastSharedRef<SMinesweeperGridSlot>(Slots->GetChildAt(Index));
         };
         
         const int Index = m_SelectedHeight * Column + Row;
-        if(IsValidIndex(Index))
+        if(IsValidGridPanelIndex(Index))
         {
             GetSlotRef(Index)->SetSlotValue(SlotValue);
         }
@@ -465,6 +450,10 @@ void SMinesweeperWindow::MakeAllGridVisible()
     }
 }
 
+bool SMinesweeperWindow::IsValidGridPanelIndex(int32 Index) const
+{
+    return m_SelectedWidth * m_SelectedHeight > Index && Index >= 0;
+}
 
 // ------------------------------------------------------------------------
 // Protectred class functions (Callbacks)
