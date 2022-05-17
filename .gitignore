@@ -3,6 +3,7 @@ Binaries/
 Intermediate/
 Plugins/Binaries/
 Plugins/Binaries/Intermediate
+Saved/
 
 #Ignore files
 *.xcworkspace
