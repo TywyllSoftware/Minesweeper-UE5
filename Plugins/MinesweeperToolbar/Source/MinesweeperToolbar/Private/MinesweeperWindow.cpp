@@ -421,6 +421,7 @@ void SMinesweeperWindow::SetGridSlotValue(const int32 Column, const int32 Row, c
         if(IsValidGridPanelIndex(Index) && GetSlotRef(Index)->GetSlotType() != EMinesweeperGridSlotType::Bomb)
         {
             GetSlotRef(Index)->SetSlotValue(SlotValue);
+            GetSlotRef(Index)->SetExpanded();
         }
     }
 }
