@@ -1,0 +1,24 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "MinesweeperToolbar",
+	"Description": "A simple editor minesweeper plugin",
+	"Category": "Other",
+	"CreatedBy": "Tomas",
+	"CreatedByURL": "",
+	"DocsURL": "",
+	"MarketplaceURL": "",
+	"SupportURL": "",
+	"CanContainContent": false,
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "MinesweeperToolbar",
+			"Type": "Editor",
+			"LoadingPhase": "Default"
+		}
+	]
+}
