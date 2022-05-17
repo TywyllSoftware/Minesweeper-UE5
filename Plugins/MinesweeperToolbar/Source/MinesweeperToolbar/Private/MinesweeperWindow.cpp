@@ -253,6 +253,7 @@ void SMinesweeperWindow::CreateNewGrid()
 {
     check(m_UniformGridPanel.IsValid());
  
+    m_GameState = EMinesweeperGameState::Playing;
     m_NumberOfCellsLeft = m_SelectedHeight * m_SelectedWidth;
     
     m_UniformGridPanel->ClearChildren();
@@ -507,6 +508,12 @@ FReply SMinesweeperWindow::OnGenerateNewGridClicked()
 
 void SMinesweeperWindow::OnGridPanelClicked(int32 Column, int32 Row)
 {
+    if(m_GameState == EMinesweeperGameState::Lost || m_GameState == EMinesweeperGameState::Won)
+    {
+        UE_LOG(LogTemp, Warning, TEXT("Please restart game"));
+        return;
+    }
+    
     if(auto Slots = m_UniformGridPanel->GetChildren())
     {
         const auto GetSlotRef = [&Slots](const int32 Index) -> TSharedRef<SMinesweeperGridSlot>
@@ -517,6 +524,8 @@ void SMinesweeperWindow::OnGridPanelClicked(int32 Column, int32 Row)
         const int32 Index = m_SelectedHeight * Column + Row;
         if(IsValidGridPanelIndex(Index) && GetSlotRef(Index)->GetSlotType() == EMinesweeperGridSlotType::Bomb)
         {
+            m_GameState = EMinesweeperGameState::Lost;
+            
             FMessageDialog::Open(EAppMsgType::Ok, GLostGameText);
             MakeAllGridVisible();
             return;
@@ -525,6 +534,8 @@ void SMinesweeperWindow::OnGridPanelClicked(int32 Column, int32 Row)
         ExpandRecursively(Column, Row);
         if(m_NumberOfCellsLeft == m_SelectedNumberOfMines)
         {
+            m_GameState = EMinesweeperGameState::Won;
+            
             FMessageDialog::Open(EAppMsgType::Ok, GWonGameText);
             MakeAllGridVisible();
         }

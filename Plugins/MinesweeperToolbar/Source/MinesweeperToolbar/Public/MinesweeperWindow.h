@@ -14,6 +14,15 @@
 #include "Widgets/Layout/SUniformGridPanel.h"
 #include "Engine/Texture2D.h"
 
+
+enum class EMinesweeperGameState :int32
+{
+    Idle,
+    Playing,
+    Lost,
+    Won
+};
+
 class SMinesweeperWindow: public SCompoundWidget
 {
 public:
@@ -155,6 +164,7 @@ private:
     int32 m_SelectedHeight = 0;
     int32 m_SelectedNumberOfMines = 0;
     int32 m_NumberOfCellsLeft = 0;
+    EMinesweeperGameState m_GameState = EMinesweeperGameState::Idle;
     
     // Main panel area widget
     TSharedPtr<SBorder>           m_PanelArea = nullptr;
