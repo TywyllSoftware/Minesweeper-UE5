@@ -1,0 +1,9 @@
+#Ignore Builds folders
+Binaries/
+Intermediate/
+Plugins/Binaries/
+Plugins/Binaries/Intermediate
+
+#Ignore files
+*.xcworkspace
+*.DS_Store
