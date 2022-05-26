@@ -2,8 +2,8 @@
 
 <img width="881" alt="image" src="https://user-images.githubusercontent.com/10357361/168761392-15368163-1663-4fba-8fa3-af0249b49567.png">
 
-![image](https://user-images.githubusercontent.com/10357361/168759289-4e91115b-2f0a-4bc0-95cd-bcdb99b59513.png)
-![image](https://user-images.githubusercontent.com/10357361/168759379-b3195ca3-bc30-43f0-89ab-966fcc4cda42.png)
+<img width="1377" alt="image" src="https://user-images.githubusercontent.com/10357361/168856792-2d792e31-5e35-49dc-91ea-9f777a6e403c.png">
+<img width="1355" alt="image" src="https://user-images.githubusercontent.com/10357361/168857528-a1adaaf7-3b01-4cf1-bf81-3d26ceccaa4b.png">
 
 
 # How to build with Xcode (Mac)
