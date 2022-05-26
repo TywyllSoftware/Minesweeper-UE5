@@ -114,6 +114,14 @@ protected:
      */
     bool IsValidGridPanelIndex(int32 Index) const;
     
+    /*
+        @param Column
+        @param Row
+     
+        @return Calculated index from column and row
+     */
+    int32 ComputeIndex(int32 Column, int32 Row) const;
+    
 protected:
     
     // ------------------------------------------------------------------------

@@ -312,7 +312,7 @@ void SMinesweeperWindow::MarkBombs()
             const int32 Row = FMath::RandRange(0, m_SelectedWidth-1);
             const int32 Column = FMath::RandRange(0, m_SelectedHeight-1);
             
-            int32 Index = m_SelectedHeight * Column + Row;
+            int32 Index = ComputeIndex(Column, Row);
             if(GetSlotRef(Index)->GetSlotType() == EMinesweeperGridSlotType::Bomb)
             {
                 continue;
@@ -336,7 +336,7 @@ void SMinesweeperWindow::ExpandRecursively(const int32 Column, const int32 Row)
                 return StaticCastSharedRef<SMinesweeperGridSlot>(Slots->GetChildAt(Index));
             };
             
-            const int Index = m_SelectedHeight * Column + Row;
+            const int Index = ComputeIndex(Column, Row);
             
             if(IsValidGridPanelIndex(Index) == false ||  GetSlotRef(Index)->GetSlotType() == EMinesweeperGridSlotType::Bomb
                || GetSlotRef(Index)->IsExpanded() == true)
@@ -369,25 +369,25 @@ int32 SMinesweeperWindow::CountAdjBombs(const int32 Column, const int32 Row)
             return StaticCastSharedRef<SMinesweeperGridSlot>(Slots->GetChildAt(Index));
         };
         
-        int32 Index = m_SelectedHeight * (Column - 1) + Row;
+        int32 Index = ComputeIndex(Column - 1,  Row);
         if(IsValidGridPanelIndex(Index) == true && GetSlotRef(Index)->GetSlotType() == EMinesweeperGridSlotType::Bomb)
         {
             BombCount++;
         }
         
-        Index = m_SelectedHeight * (Column + 1) + Row;
+        Index = ComputeIndex(Column + 1,  Row);
         if(IsValidGridPanelIndex(Index) == true && GetSlotRef(Index)->GetSlotType() == EMinesweeperGridSlotType::Bomb)
         {
             BombCount++;
         }
         
-        Index = m_SelectedHeight * Column + (Row - 1);
+        Index = ComputeIndex(Column,  Row - 1);
         if(IsValidGridPanelIndex(Index) == true && GetSlotRef(Index)->GetSlotType() == EMinesweeperGridSlotType::Bomb)
         {
             BombCount++;
         }
         
-        Index = m_SelectedHeight * Column + (Row + 1);
+        Index = ComputeIndex(Column,  Row + 1);
         if(IsValidGridPanelIndex(Index) == true && GetSlotRef(Index)->GetSlotType() == EMinesweeperGridSlotType::Bomb)
         {
             BombCount++;
@@ -406,7 +406,7 @@ void SMinesweeperWindow::SetGridSlotValue(const int32 Column, const int32 Row, c
             return StaticCastSharedRef<SMinesweeperGridSlot>(Slots->GetChildAt(Index));
         };
         
-        const int Index = m_SelectedHeight * Column + Row;
+        int32 Index = Index = ComputeIndex(Column, Row);
         if(IsValidGridPanelIndex(Index) && GetSlotRef(Index)->GetSlotType() != EMinesweeperGridSlotType::Bomb)
         {
             GetSlotRef(Index)->SetSlotValue(SlotValue);
@@ -430,7 +430,7 @@ void SMinesweeperWindow::MakeAllGridVisible()
             {
                 ExpandRecursively(Column, Row);
                 
-                const int Index = m_SelectedHeight * Column + Row;
+                int32 Index = ComputeIndex(Column, Row);
                 if(GetSlotRef(Index)->GetSlotType() == EMinesweeperGridSlotType::Bomb)
                 {
                     GetSlotRef(Index)->SetSlotTextBasedOnCurrentType();
@@ -443,6 +443,11 @@ void SMinesweeperWindow::MakeAllGridVisible()
 bool SMinesweeperWindow::IsValidGridPanelIndex(int32 Index) const
 {
     return m_SelectedWidth * m_SelectedHeight > Index && Index >= 0;
+}
+
+int32 SMinesweeperWindow::ComputeIndex(int32 Column, int32 Row) const
+{
+    return m_SelectedHeight * Column + Row;
 }
 
 // ------------------------------------------------------------------------
@@ -509,7 +514,7 @@ void SMinesweeperWindow::OnGridPanelClicked(int32 Column, int32 Row)
             return StaticCastSharedRef<SMinesweeperGridSlot>(Slots->GetChildAt(Index));
         };
         
-        const int32 Index = m_SelectedHeight * Column + Row;
+        int32 Index = ComputeIndex(Column, Row);
         if(IsValidGridPanelIndex(Index) && GetSlotRef(Index)->GetSlotType() == EMinesweeperGridSlotType::Bomb)
         {
             m_GameState = EMinesweeperGameState::Lost;
