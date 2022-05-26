@@ -71,13 +71,7 @@ protected:
         @return Current selected Number Of Mines
      */
     TOptional<int32> GetNumberOfMines() const;
-        
-    /*
-        @param index
-        @return
-     */
-    FLinearColor GetNumberColor(const int32 index) const;
-    
+            
     /*
         @brief Callback when clicked on grid cell
      

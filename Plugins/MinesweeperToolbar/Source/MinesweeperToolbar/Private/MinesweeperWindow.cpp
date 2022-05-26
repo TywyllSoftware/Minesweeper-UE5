@@ -290,16 +290,6 @@ TOptional<int32> SMinesweeperWindow::GetNumberOfMines() const
     return m_SelectedNumberOfMines;
 }
 
-FLinearColor SMinesweeperWindow::GetNumberColor(const int32 index) const
-{
-    switch (index)
-    {
-        case 1: return FColor::Green;
-        case 2: return FColor::Orange;
-        default: return FColor::Red;
-    }
-}
-
 void SMinesweeperWindow::MarkBombs()
 {
     int32 MineCount = m_SelectedNumberOfMines;
