@@ -95,7 +95,7 @@ protected:
      
         @return
      */
-    int32 CountAdjBombs(const int32 Column, const int32 Row);
+    [[nodiscard]] int32 CountAdjBombs(const int32 Column, const int32 Row);
     
     /*
         @brief Sets grid slot value as long as it is not a bomb and also marks as expanded (Not clickable anymore)
@@ -112,7 +112,7 @@ protected:
      
         @param Index
      */
-    bool IsValidGridPanelIndex(int32 Index) const;
+    [[nodiscard]] bool IsValidGridPanelIndex(int32 Index) const;
     
     /*
         @param Column
@@ -120,7 +120,7 @@ protected:
      
         @return Calculated index from column and row
      */
-    int32 ComputeIndex(int32 Column, int32 Row) const;
+    [[nodiscard]] int32 ComputeIndex(int32 Column, int32 Row) const;
     
 protected:
     

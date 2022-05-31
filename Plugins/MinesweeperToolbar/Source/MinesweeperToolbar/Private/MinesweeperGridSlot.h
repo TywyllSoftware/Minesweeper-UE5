@@ -54,14 +54,14 @@ public:
         
     void SetExpanded();
     
-    bool IsExpanded();
+    [[nodiscard]] bool IsExpanded();
         
     /*
         @param Type
      */
     void SetSlotType(const EMinesweeperGridSlotType Type);
     
-    EMinesweeperGridSlotType GetSlotType() const;
+    [[nodiscard]] EMinesweeperGridSlotType GetSlotType() const;
     
     void SetSlotValue(const int32 InValue);
     
@@ -81,7 +81,7 @@ protected:
     
     void SetFlagged();
     
-    bool IsFlagged() const;
+    [[nodiscard]] bool IsFlagged() const;
     
 protected:
     
